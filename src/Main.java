@@ -8,9 +8,10 @@ public class Main {
         System.out.println("=== uwu ===");
         System.out.println("WPM Calculator!");
         System.out.println("=== uwu ===");
-        System.out.println("Type the following random words as fast as you can: ");
+        System.out.println("Type the following words as fast as you can: ");
+        System.out.println();
 
-        // words
+        // words list
         String[] words = {
                 "aberration", "benevolent", "cacophony", "debilitate", "ebullient",
                 "facetious", "garrulous", "haphazard", "iconoclast", "juxtapose",
@@ -31,10 +32,20 @@ public class Main {
         };
 
         // generate 10 random words
+        StringBuilder randomWords = new StringBuilder();
+
         Random random = new Random();
-        for (int i = 0; i < 10; i++) {
-            System.out.print(words[random.nextInt(words.length)] + " ");
+        int numberOfWords = 10;
+        for (int i = 0; i < numberOfWords; i++) {
+            randomWords.append(words[random.nextInt(words.length)]);
+            if(i < numberOfWords - 1) {
+                randomWords.append(" ");
+            }
         }
+
+        // print random words
+        System.out.println(randomWords.toString());
+
         System.out.println();
         System.out.println("Press enter to start typing...");
 
@@ -48,7 +59,20 @@ public class Main {
         int numberOfWordsTyped = userTypedWords.split("\\s+").length;
         int wpm = (int) Math.round( numberOfWordsTyped / (elapsedTimeInSeconds / 60.0));
 
+        // count spelling mistakes
+        String[] correctWords = randomWords.toString().split("\\s+");
+        String[] inputWords = userTypedWords.split("\\s+");
+        int spellingMistakes = 0;
+
+        for (int i = 0; i < correctWords.length && i < inputWords.length; i++) {
+            if(!correctWords[i].equals(inputWords[i])) {
+                spellingMistakes++;
+            }
+        }
+
         System.out.println("Your typing speed is approximately " + wpm + " WPM.");
+        System.out.println();
+        System.out.println("SPELLING MISTAKES: " + spellingMistakes);
         sc.close();
     }
 }
